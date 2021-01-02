@@ -1,33 +1,33 @@
 variable "region" {
-  type = string
+  type    = string
   default = "ap-south-1"
 }
 
 variable "zone" {
-  type = string
+  type    = string
   default = "ap-south-1a"
 }
 
 variable "tags" {
-  type = map
+  type = map(any)
   default = {
     name = "petclinic"
   }
 }
 
 variable "amis" {
-  type = map
+  type = map(any)
   default = {
     "ap-south-1" = "ami-005634d2b7691f303"
   }
 }
 
 variable "server_instances" {
-  type = number
+  type    = number
   default = 1
 }
 
 variable "public_key" {
-  type = string
+  type    = string
   default = "mykey.pub"
 }
