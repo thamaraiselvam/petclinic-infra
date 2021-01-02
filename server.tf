@@ -16,3 +16,16 @@ ${ip} ansible_user=ubuntu ansible_ssh_private_key_file=${abspath(path.cwd)}/myke
 EOF
   filename = "${path.cwd}/ansible/hosts"
 }
+
+resource "null_resource" "ansible" {
+  provisioner "ansible" {
+    plays{
+      playbook{
+        file_path = "${path.cwd}/ansible/rest-server.yaml"
+      }
+
+      verbose = true
+      inventory_file = local_file.ansible_inventory.filename
+    }
+  }
+}
