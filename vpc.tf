@@ -36,9 +36,9 @@ resource "aws_security_group" "allow_traffic" {
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    description = "allow 80 port"
-    from_port   = 80
-    to_port     = 80
+    description = "allow 9966 port"
+    from_port   = 9966
+    to_port     = 9966
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

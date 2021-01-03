@@ -22,11 +22,6 @@ variable "amis" {
   }
 }
 
-variable "server_instances" {
-  type    = number
-  default = 1
-}
-
 variable "public_key" {
   type    = string
   default = "mykey.pub"
