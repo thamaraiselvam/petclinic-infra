@@ -11,7 +11,7 @@
         force: yes
     - name: Update environment file
       template:
-        src: frontend_env.j2
+        src: templates/frontend_env.j2
         dest: "{{dest_root}}/spring-petclinic-angular/src/environments/environment.prod.ts"
         mode: 0644
     - block:
@@ -47,7 +47,7 @@
           cp -r dist/* /var/www/html/petclinic/
       - name: Modify nginx config
         template:
-          src: frontend_nginx.j2
+          src: templates/frontend_nginx.j2
           dest: /etc/nginx/nginx.conf
           mode: 0644
       - name: Start service

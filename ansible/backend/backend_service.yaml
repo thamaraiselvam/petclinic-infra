@@ -25,7 +25,7 @@
 
       - name: Create service file
         template:
-          src: backend_service.j2
+          src: templates/backend_service.j2
           dest: /etc/systemd/system/petclinic-rest.service
           mode: 0644
 

@@ -1,0 +1,9 @@
+[Unit]
+Description=Petclinic Rest Service
+
+[Service]
+Type=simple
+ExecStart=java -jar {{dest_root}}/spring-petclinic-rest/target/spring-petclinic-rest-{{service_version}}.jar
+
+[Install]
+WantedBy=multi-user.target
