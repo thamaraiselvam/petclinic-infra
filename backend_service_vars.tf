@@ -1,6 +1,6 @@
 variable "backend_service_version" {
   type = string
-  default = "2.5.5"
+  default = "2.2.5"
 }
 
 variable "backend_service_instances" {

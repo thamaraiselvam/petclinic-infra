@@ -1,0 +1,59 @@
+- hosts: frontend_service
+  remote_user: root
+  gather_facts: false
+  vars:
+    dest_root: /home/ubuntu
+  tasks:
+    - name: Clone frontend service codebase
+      git:
+        repo: https://github.com/thamaraiselvam/spring-petclinic-angular.git
+        dest: "{{dest_root}}/spring-petclinic-angular"
+        force: yes
+    - name: Update environment file
+      template:
+        src: frontend_env.j2
+        dest: "{{dest_root}}/spring-petclinic-angular/src/environments/environment.prod.ts"
+        mode: 0644
+    - block:
+      - name: Install nodejs v15
+        shell: |
+          curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+      - name: Install angular
+        npm:
+          name: "@angular/cli@latest"
+          global: yes
+          state: latest
+      become: yes
+      become_user: root
+    - name: Install npm packages
+      shell: |
+        cd "{{dest_root}}/spring-petclinic-angular"
+        yes | npm install
+    - name: Build app
+      shell: |
+        cd "{{dest_root}}/spring-petclinic-angular"
+        ng build --prod --build-optimizer=false --base-href=/petclinic/ --deploy-url=/petclinic/
+    - block:
+      - name: Install nginx
+        package:
+          name: nginx
+          update_cache: true
+          state: latest
+      - name: Copy files to nginx serve folder
+        shell: |
+          mkdir -p /var/www/html/petclinic
+          cd "{{dest_root}}/spring-petclinic-angular"
+          cp -r dist/* /var/www/html/petclinic/
+      - name: Modify nginx config
+        template:
+          src: frontend_nginx.j2
+          dest: /etc/nginx/nginx.conf
+          mode: 0644
+      - name: Start service
+        systemd:
+          name: nginx
+          enabled: true
+          state: started
+      become: yes
+      become_user: root

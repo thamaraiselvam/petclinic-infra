@@ -20,7 +20,7 @@
 
       - name: Build jar file for rest service
         shell: |
-          cd "{{dest_root}}"/spring-petclinic-rest
+          cd "{{dest_root}}/spring-petclinic-rest"
           mvn clean package -DskipTests
 
       - name: Create service file

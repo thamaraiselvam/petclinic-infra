@@ -1,24 +1,25 @@
-resource "aws_instance" "backend_service" {
+resource "aws_instance" "frontend_service" {
   ami                    = lookup(var.amis, var.region)
-  instance_type          = "t2.micro"
+  instance_type          = "t2.small"
   subnet_id              = aws_subnet.public.id
-  vpc_security_group_ids = [aws_security_group.backend_service.id]
-  count                  = var.backend_service_instances
+  vpc_security_group_ids = [aws_security_group.frontend_service.id]
+  count                  = var.frontend_service_instances
   key_name               = aws_key_pair.mykey.id
 
-  tags = merge(var.tags, var.backend_service_tags)
+  tags = merge(var.tags, var.frontend_service_tags)
 }
 
-resource "null_resource" "deploy_backend" {
+resource "null_resource" "deploy_frontend" {
   provisioner "ansible" {
     plays{
       playbook{
-        file_path = "${path.cwd}/ansible/backend_service.yaml"
+        file_path = "${path.cwd}/ansible/frontend_service.yaml"
       }
 
       extra_vars = {
-        backend_service_version = var.backend_service_version
-        setup_backend_service = true
+        frontend_service_version = var.frontend_service_version
+        setup_frontend_service = true
+        backend_service_addr = "${aws_instance.backend_service.0.public_ip}:9966"
       }
 
       verbose = true
@@ -27,16 +28,15 @@ resource "null_resource" "deploy_backend" {
   }
 }
 
-
-resource "aws_security_group" "backend_service" {
-  name        = "backend_service_allow_traffic"
+resource "aws_security_group" "frontend_service" {
+  name        = "frontend_service_allow_traffic"
   description = "Allow inbound and outbound traffic"
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    description = "allow 9966 port"
-    from_port   = 9966
-    to_port     = 9966
+    description = "allow 80 port"
+    from_port   = 80
+    to_port     = 80
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
