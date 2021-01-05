@@ -4,36 +4,12 @@
   vars:
     dest_root: /home/ubuntu
   tasks:
-    - block:
-      - name: Install stack
-        package:
-          name:
-            - default-jdk
-            - maven
-          state: latest
-          update_cache: true
-
-      - name: Clone rest service codebase
-        git:
-          repo: https://github.com/spring-petclinic/spring-petclinic-rest.git
-          dest: "{{dest_root}}/spring-petclinic-rest"
-
-      - name: Build jar file for rest service
-        shell: |
-          cd "{{dest_root}}/spring-petclinic-rest"
-          mvn clean package -DskipTests
-
-      - name: Create service file
-        template:
-          src: templates/backend_service.j2
-          dest: /etc/systemd/system/petclinic-rest.service
-          mode: 0644
-
-      - name: Start service
-        systemd:
-          name: petclinic-rest
-          state: started
-          enabled: yes
-
+    - name: Install stack
+      package:
+        name:
+          - default-jdk
+          - maven
+        state: latest
+        update_cache: true
       become: yes
       become_user: root
