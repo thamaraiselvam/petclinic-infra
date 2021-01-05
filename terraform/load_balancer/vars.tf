@@ -1,19 +1,19 @@
 variable "subnets" {
-  type = list
+  type = list(any)
 }
 
 variable "listen_port" {
-  type = number
+  type    = number
   default = 80
 }
 
 variable "target_port" {
-  type = number
+  type    = number
   default = 80
 }
 
 variable "security_group_id" {
-  type = list
+  type = list(any)
 }
 
 variable "vpc_id" {

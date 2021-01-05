@@ -19,7 +19,7 @@ variable "amis" {
 }
 
 variable "service_version" {
-  type = string
+  type    = string
   default = "2.2.5"
 }
 
@@ -29,7 +29,7 @@ variable "instances_count" {
 }
 
 variable "service_port" {
-  type = number
+  type    = number
   default = 9966
 }
 
@@ -42,5 +42,5 @@ variable "key_name" {
 }
 
 variable "subnets" {
-  type = list
+  type = list(any)
 }

@@ -19,7 +19,7 @@ variable "amis" {
 }
 
 variable "vpc_id" {
-  type = string
+  type    = string
   default = ""
 }
 
@@ -32,5 +32,5 @@ variable "backend_service_addr" {
 }
 
 variable "subnets" {
-  type = list
+  type = list(any)
 }
