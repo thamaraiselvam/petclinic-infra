@@ -8,7 +8,3 @@ output "public_ips" {
 output "backend_load_balancer_dns" {
   value = module.elb.dns_name
 }
-
-output "backend_service_addr" {
-  value = "${module.elb.dns_name}:9966"
-}

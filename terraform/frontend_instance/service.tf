@@ -23,10 +23,6 @@ resource "null_resource" "setup_frontend" {
         file_path = "./../ansible/frontend/service.yaml"
       }
 
-      extra_vars = {
-        backend_service_addr = var.backend_service_addr
-      }
-
       verbose        = true
       inventory_file = local_file.ansible_inventory.filename
     }

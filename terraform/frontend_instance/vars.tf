@@ -27,9 +27,6 @@ variable "key_name" {
   type = string
 }
 
-variable "backend_service_addr" {
-  type = string
-}
 
 variable "subnets" {
   type = list(any)

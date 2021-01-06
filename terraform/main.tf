@@ -25,6 +25,5 @@ module "frontend" {
   source               = "./frontend_instance"
   vpc_id               = module.vpc.vpc_id
   key_name             = module.keypair.key_name
-  backend_service_addr = module.backend.backend_load_balancer_dns
   subnets              = module.vpc.subnets
 }

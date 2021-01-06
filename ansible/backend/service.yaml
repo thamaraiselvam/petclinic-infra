@@ -1,11 +1,12 @@
 - hosts: backend_service
   tasks:
-    - name: Install stack
-      package:
-        name:
-          - default-jdk
-          - maven
-        state: latest
-        update_cache: true
+    - block:
+        - name: Update cache
+          apt:
+            update_cache: true
+        - name: Install java environment
+          apt:
+            name: openjdk-11-jdk
+            state: latest
       become: yes
       become_user: root

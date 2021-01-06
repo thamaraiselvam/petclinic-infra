@@ -2,8 +2,11 @@
   gather_facts: false
   tasks:
     - block:
+        - name: Update cache
+          apt:
+            update_cache: true
         - name: Install postgres and dependancies
-          package:
+          apt:
             name:
               - postgresql
               - postgresql-contrib
@@ -11,7 +14,6 @@
               - python3-psycopg2
               - acl
             state: latest
-            update_cache: true
         - name: Make postgres available to public
           shell: |
             echo "listen_addresses = '*'" >> /etc/postgresql/12/main/postgresql.conf
@@ -20,9 +22,6 @@
           systemd:
             name: postgresql
             state: restarted
-      become: true
-      become_user: root
-    - block:
         - name: Create postgres database
           postgresql_db:
             name: "{{database}}"
