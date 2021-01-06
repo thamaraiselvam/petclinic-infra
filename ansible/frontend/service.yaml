@@ -7,19 +7,23 @@
     nginx_config_path: /etc/nginx/nginx.conf
   tasks:
     - block:
-        - name: Install node stack and proxy server
+        - name: Install nginx proxy server
           package:
             name:
-              - node
-              - npm
               - nginx
             state: latest
             update_cache: true
+        - name: install nodejs latest version
+          shell: |
+            curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
+            sudo apt-get install -y nodejs
         - name: Install angular
           npm:
             name: "@angular/cli@latest"
             global: yes
             state: latest
+          environment:
+            NG_CLI_ANALYTICS: ci # disable log collector prompt
         - name: Create serving directory
           file:
             path: "{{nginx_serving_path}}"
@@ -35,6 +39,5 @@
             name: nginx
             enabled: true
             state: started
-
       become: yes
       become_user: root

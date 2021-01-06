@@ -20,7 +20,7 @@ resource "null_resource" "deploy_frontend" {
   provisioner "ansible" {
     plays {
       playbook {
-        file_path = "./../ansible/frontend/frontend_service.yaml"
+        file_path = "./../ansible/frontend/service.yaml"
       }
 
       extra_vars = {

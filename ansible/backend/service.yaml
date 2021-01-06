@@ -1,8 +1,4 @@
 - hosts: backend_service
-  remote_user: root
-  gather_facts: false
-  vars:
-    dest_root: /home/ubuntu
   tasks:
     - name: Install stack
       package:

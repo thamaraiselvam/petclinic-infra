@@ -1,0 +1,35 @@
+- hosts: database
+  gather_facts: false
+  tasks:
+    - block:
+        - name: Install postgres and dependancies
+          package:
+            name:
+              - postgresql
+              - postgresql-contrib
+              - libpq-dev
+              - python3-psycopg2
+              - acl
+            state: latest
+            update_cache: true
+        - name: Make postgres available to public
+          shell: |
+            echo "listen_addresses = '*'" >> /etc/postgresql/12/main/postgresql.conf
+            echo "host  all  all 0.0.0.0/0 md5" >> /etc/postgresql/12/main/pg_hba.conf
+        - name: Restart postgres
+          systemd:
+            name: postgresql
+            state: restarted
+      become: true
+      become_user: root
+    - block:
+        - name: Create postgres database
+          postgresql_db:
+            name: "{{database}}"
+        - name: Setup user and database
+          postgresql_user:
+            db: "{{database}}"
+            name: "{{user_name}}"
+            password: "{{user_password}}"
+      become: true
+      become_user: postgres
