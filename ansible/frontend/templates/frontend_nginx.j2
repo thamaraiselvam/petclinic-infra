@@ -4,7 +4,7 @@ server {
   index index.html;
 
 	location /petclinic/ {
-    alias /var/www/html/petclinic/dist/;
+    alias /var/www/html/petclinic/;
     try_files $uri$args $uri$args/ /petclinic/index.html;
   }
 }

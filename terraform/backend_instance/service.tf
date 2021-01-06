@@ -50,7 +50,7 @@ resource "aws_security_group" "backend_service" {
   tags = var.tags
 }
 
-resource "null_resource" "deploy_backend" {
+resource "null_resource" "setup_backend" {
   provisioner "ansible" {
     plays {
       playbook {

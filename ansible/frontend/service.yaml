@@ -4,7 +4,7 @@
   vars:
     dest_root: /home/ubuntu
     nginx_serving_path: /var/www/html/petclinic
-    nginx_config_path: /etc/nginx/nginx.conf
+    nginx_config_path: /etc/nginx/sites-enabled/default
   tasks:
     - block:
         - name: Install nginx proxy server

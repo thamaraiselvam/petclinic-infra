@@ -1,3 +1,3 @@
 # petclinic-infra
-This repository contains terraform and ansible script to deploy petclinic components into aws.
+This repository contains terraform and ansible script to provision infrastucture for petclinic application.
 

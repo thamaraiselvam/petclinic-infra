@@ -16,7 +16,7 @@ resource "aws_instance" "frontend_service_two" {
   tags                   = var.tags
 }
 
-resource "null_resource" "deploy_frontend" {
+resource "null_resource" "setup_frontend" {
   provisioner "ansible" {
     plays {
       playbook {
