@@ -44,7 +44,7 @@ resource "null_resource" "setup_database" {
   provisioner "ansible" {
     plays {
       playbook {
-        file_path = "./../ansible/database/service.yaml"
+        file_path = "./../ansible/database/setup.yaml"
       }
 
       extra_vars = {

@@ -1,6 +1,7 @@
 - hosts: backend_service
   tasks:
-    - block:
+    - name: Install java environment
+      block:
         - name: Update cache
           apt:
             update_cache: true

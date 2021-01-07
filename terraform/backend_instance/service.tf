@@ -54,7 +54,7 @@ resource "null_resource" "setup_backend" {
   provisioner "ansible" {
     plays {
       playbook {
-        file_path = "./../ansible/backend/service.yaml"
+        file_path = "./../ansible/backend/setup.yaml"
       }
 
       extra_vars = {

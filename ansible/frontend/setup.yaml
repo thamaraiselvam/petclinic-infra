@@ -6,25 +6,19 @@
     nginx_serving_path: /var/www/html/petclinic
     nginx_config_path: /etc/nginx/sites-enabled/default
   tasks:
-    - block:
+    - name: Install nginx server
+      block:
         - name: Update cache
           apt:
             update_cache: true
-        - name: Install nginx proxy server
+        - name: Install nginx
           apt:
             name: nginx
             state: latest
-        - name: install nodejs latest version
-          shell: |
-            curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
-            sudo apt-get install -y nodejs
-        - name: Install angular
-          npm:
-            name: "@angular/cli@latest"
-            global: yes
-            state: latest
-          environment:
-            NG_CLI_ANALYTICS: ci # disable log collector prompt
+      become: yes
+      become_user: root
+    - name: Configure server
+      block:
         - name: Create serving directory
           file:
             path: "{{nginx_serving_path}}"
@@ -35,10 +29,10 @@
             src: templates/frontend_nginx.j2
             dest: "{{nginx_config_path}}"
             mode: "644"
-        - name: Start service
+        - name: Restart server
           systemd:
             name: nginx
             enabled: true
-            state: started
+            state: restarted
       become: yes
       become_user: root

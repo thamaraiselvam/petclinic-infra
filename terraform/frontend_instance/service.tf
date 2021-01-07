@@ -20,7 +20,7 @@ resource "null_resource" "setup_frontend" {
   provisioner "ansible" {
     plays {
       playbook {
-        file_path = "./../ansible/frontend/service.yaml"
+        file_path = "./../ansible/frontend/setup.yaml"
       }
 
       verbose        = true

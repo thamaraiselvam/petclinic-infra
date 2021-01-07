@@ -1,2 +1,3 @@
 .vscode
+ansible/inventories/*_hosts
 todo.txt
