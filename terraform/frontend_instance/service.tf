@@ -16,19 +16,6 @@ resource "aws_instance" "frontend_service_two" {
   tags                   = var.tags
 }
 
-resource "null_resource" "setup_frontend" {
-  provisioner "ansible" {
-    plays {
-      playbook {
-        file_path = "./../ansible/frontend/setup.yaml"
-      }
-
-      verbose        = true
-      inventory_file = local_file.ansible_inventory.filename
-    }
-  }
-}
-
 resource "aws_security_group" "frontend_service" {
   name        = "frontend_service_allow_traffic"
   description = "Allow inbound and outbound traffic"
@@ -70,4 +57,17 @@ module "elb" {
   vpc_id            = var.vpc_id
   target_one_id     = aws_instance.frontend_service_one.id
   target_two_id     = aws_instance.frontend_service_two.id
+}
+
+resource "null_resource" "setup_frontend" {
+  provisioner "ansible" {
+    plays {
+      playbook {
+        file_path = "./../ansible/frontend/setup.yaml"
+      }
+
+      verbose        = true
+      inventory_file = local_file.ansible_inventory.filename
+    }
+  }
 }

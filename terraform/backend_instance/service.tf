@@ -50,6 +50,19 @@ resource "aws_security_group" "backend_service" {
   tags = var.tags
 }
 
+module "elb" {
+  source            = "./../load_balancer"
+  alb_name          = "backend-alb"
+  alb_target_name   = "backend-target"
+  subnets           = var.subnets
+  security_group_id = [aws_security_group.backend_service.id]
+  vpc_id            = var.vpc_id
+  target_one_id     = aws_instance.backend_service_one.id
+  target_two_id     = aws_instance.backend_service_two.id
+  listen_port       = var.service_port
+  target_port       = var.service_port
+}
+
 resource "null_resource" "setup_backend" {
   provisioner "ansible" {
     plays {
@@ -67,15 +80,3 @@ resource "null_resource" "setup_backend" {
   }
 }
 
-module "elb" {
-  source            = "./../load_balancer"
-  alb_name          = "backend-alb"
-  alb_target_name   = "backend-target"
-  subnets           = var.subnets
-  security_group_id = [aws_security_group.backend_service.id]
-  vpc_id            = var.vpc_id
-  target_one_id     = aws_instance.backend_service_one.id
-  target_two_id     = aws_instance.backend_service_two.id
-  listen_port       = var.service_port
-  target_port       = var.service_port
-}
