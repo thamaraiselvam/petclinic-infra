@@ -1,4 +1,5 @@
 - hosts: database
+  strategy: free
   gather_facts: false
   tasks:
     - name: Install postgres environment
@@ -16,7 +17,7 @@
               - acl
             state: latest
       become: true
-      become_user: postgres
+      become_user: root
     - name: Configure postgres
       block:
         - name: Make postgres available to public
@@ -28,7 +29,7 @@
             name: postgresql
             state: restarted
       become: true
-      become_user: postgres
+      become_user: root
     - name: Setup new database
       block:
         - name: Create postgres database

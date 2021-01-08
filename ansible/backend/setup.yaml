@@ -1,4 +1,5 @@
 - hosts: backend_service
+  strategy: free
   tasks:
     - name: Install java environment
       block:

@@ -1,5 +1,5 @@
 - hosts: frontend_service
-  remote_user: root
+  strategy: free
   gather_facts: false
   vars:
     dest_root: /home/ubuntu
