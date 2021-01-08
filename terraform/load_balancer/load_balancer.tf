@@ -31,13 +31,13 @@ resource "aws_alb_target_group" "alb_target" {
 }
 
 
-resource "aws_alb_target_group_attachment" "backend_service_one" {
+resource "aws_alb_target_group_attachment" "attach_group_one" {
   target_group_arn = aws_alb_target_group.alb_target.arn
   target_id        = var.target_one_id
   port             = var.target_port
 }
 
-resource "aws_alb_target_group_attachment" "backend_service_two" {
+resource "aws_alb_target_group_attachment" "attach_group_two" {
   target_group_arn = aws_alb_target_group.alb_target.arn
   target_id        = var.target_two_id
   port             = var.target_port
